@@ -1,0 +1,7 @@
+extends layout
+
+block content
+    p "results..."
+    ul
+    each val in ships_data
+        li=val.ship_description

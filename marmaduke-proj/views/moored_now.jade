@@ -1,0 +1,15 @@
+extends layout
+
+block content
+    table
+        thead
+            th="TRIP"
+            th="SHIP"
+            th="STATE"
+            th="TIMESTAMP"
+        each cu_data in all_trips_active
+            tr
+                td=cu_data.id_control_unit_data
+                td=cu_data.ship_description
+                td=cu_data.state_name
+                td=cu_data.ts_main_event_field_val
