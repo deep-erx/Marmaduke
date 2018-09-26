@@ -1,7 +1,7 @@
 module.exports = {
     AUTH_DB: {
             user: 'lims_cn_user',
-            password: '*******',
+            password: '07R3BL4',
             database: 'lims_cn_sw',
             host: '127.0.0.1',
             port: 5432
