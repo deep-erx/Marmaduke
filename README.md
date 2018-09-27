@@ -1,5 +1,5 @@
 # Marmaduke
-RESTful 
+REST APIs - Documentation 
 
 |API | URL | Description|
 |:----|:-----|:------------|
