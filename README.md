@@ -1,4 +1,5 @@
 # Marmaduke
 
-* moored
-/api/moored/<id_portinformer>/<iso-8601::date>
+|API | URL | Description|
+|----|-----|------------|
+|Moored now|/api/moored/<id_portinformer>/|Get portinformer's moored ship|
