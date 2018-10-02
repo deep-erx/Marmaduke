@@ -29,7 +29,8 @@ router.get("/api/moored_now/:id", (req, res, next) => {
         id: id
       };
 
-      let queryMoored = queries.mooredNow(params);      
+      let queryMoored = queries.mooredNow(params);
+      console.log(queryMoored);      
       const records = await client.query(queryMoored);
       res.render("moored_now", {allTripsActive: records.rows});
 
