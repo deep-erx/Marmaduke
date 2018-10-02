@@ -6,8 +6,10 @@ block content
             th="TRIP"
             th="SHIP"
             th="CURRENT OPS"
+            th="TIMESTAMP"
         each cuData in allTripsActive
             tr
                 td=cuData.id_control_unit_data
                 td=cuData.ship_description
                 td=cuData.state_name
+                td=cuData.last_record
