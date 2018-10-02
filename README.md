@@ -2,6 +2,7 @@
 REST APIs - Documentation 
 
 **REAL TIME DATA**
+
 |API | URL | Description|
 |:----|:-----|:------------|
 |Moored now|/api/moored_now/<id_portinformer>/|Get portinformer's currently moored|
@@ -13,7 +14,8 @@ REST APIs - Documentation
 |Commercial operations|    |    |
 
 
-**ARCHIVE DATA **
+**ARCHIVE DATA**
+
 |API | URL | Description|
 |:----|:-----|:------------|
 |Moored|/api/moored/<start>/<stop>/<id_portinformer>/|Get portinformer moored|
