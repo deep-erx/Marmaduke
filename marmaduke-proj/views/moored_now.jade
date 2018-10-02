@@ -5,11 +5,9 @@ block content
         thead
             th="TRIP"
             th="SHIP"
-            th="STATE"
-            th="TIMESTAMP"
+            th="CURRENT OPS"
         each cuData in allTripsActive
             tr
                 td=cuData.id_control_unit_data
                 td=cuData.ship_description
                 td=cuData.state_name
-                td=cuData.ts_main_event_field_val
