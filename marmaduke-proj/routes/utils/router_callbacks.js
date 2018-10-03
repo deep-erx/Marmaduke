@@ -2,7 +2,7 @@
 
 let queries = require("../data/queries");
 let moment = require("moment");
-let configuration = require("../data/configuration");
+let db_settings = require("../data/db_settings");
 
 const {Pool, client} = require("pg");
 
@@ -12,8 +12,8 @@ const {Pool, client} = require("pg");
 
 function cbLiveDataTable(tmpl_name, states){
     return (req, res, next) => {
-  
-      const pool = new Pool(configuration.AUTH_DB);
+      console.log(db_settings);
+      const pool = new Pool(db_settings.AUTH_DB);
       const id = req.params.id;
       const mdate = moment().format("YYYY-MM-DD");
   
@@ -38,6 +38,7 @@ function cbLiveDataTable(tmpl_name, states){
       })().catch(e => console.log(e.stack));
     }
   }
+
 
 function cbHomePage(){
   return function(req, res) {
