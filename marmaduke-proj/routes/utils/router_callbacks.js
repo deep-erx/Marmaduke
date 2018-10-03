@@ -2,7 +2,7 @@
 
 let queries = require("../data/queries");
 let moment = require("moment");
-let db_settings = require("../data/db_settings");
+let db_settings = require("../data/config/db_settings");
 
 const {Pool, client} = require("pg");
 
