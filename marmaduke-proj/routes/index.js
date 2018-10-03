@@ -21,22 +21,49 @@ router.get("/api/moored_now/:id", (req, res, next) => {
 
   // async/await call
   (async ()=> {
-    const client = await pool.connect();
+
     try {
+      const client = await pool.connect();
       const params = {
         mdate: mdate,
         statesOfMooring: configuration.STATES_OF_MOORING,
         id: id
       };
 
-      let queryMoored = queries.mooredNow(params);
-      console.log(queryMoored);      
+      let queryMoored = queries.mooredNow(params);      
       const records = await client.query(queryMoored);
-      res.render("moored_now", {allTripsActive: records.rows});
+      res.render("moored_now", {allMooredNow: records.rows});
 
     } finally {
       client.release();
-  }})().catch(e => console.log(e.stack));
+    }
+
+  })().catch(e => console.log(e.stack));
+});
+
+router.get("/api/roadstead_now/:id", (req, res, next)=>{
+  const pool = new Pool(configuration.AUTH_DB);
+  const id = req.params.id;
+  const mdate = moment().format("YYYY-MM-DD");
+
+  // async/await call
+  (async()=>{
+    try {
+      const client = await pool.connect();
+      const params = {
+        statesOfRoadstead: configuration.STATES_OF_ROADSTEAD,
+        id: id,
+        mdate: mdate
+      };
+
+      let queryRoadstead = queries.roadsteadNow(params);
+      const records = await client.query(queryRoadstead);
+      res.render("roadstead_now", {allRoadsteadNow: records.rows})
+
+    } finally{
+      client.release();
+    }
+  })().catch(e => console.log(e.stack));  
 });
 
 module.exports = router;

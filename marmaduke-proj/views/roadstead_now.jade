@@ -1,0 +1,11 @@
+extends root_layout
+
+block content
+    table
+        thead
+            th="TRIP"
+            th="SHIP"
+        tbody
+            each cuData in allRoadsteadNow
+                td=cuData.id_control_unit_data
+                td=cuData.ship_description
