@@ -2,7 +2,7 @@
 
 let express = require("express");
 let router = express.Router();
-let configuration = require("./data/configuration");
+let configuration = require("./data/proj_settings");
 let callbacks = require("./utils/router_callbacks");
 
 /* GET home page. */
