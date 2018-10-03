@@ -1,4 +1,4 @@
-extends layout
+extends root_layout
 
 block content
     table
@@ -7,7 +7,7 @@ block content
             th="SHIP"
             th="CURRENT OPS"
             th="TIMESTAMP"
-        each cuData in allTripsActive
+        each cuData in allMooredNow
             tr
                 td=cuData.id_control_unit_data
                 td=cuData.ship_description
