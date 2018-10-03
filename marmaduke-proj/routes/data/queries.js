@@ -4,7 +4,8 @@ let fMooredNow = function (params) {
     const query = `SELECT 
     id_control_unit_data, ship_description,
     MAX_TRIP.last_record AS last_record, 
-    array_states[cursor_now+1] AS act_state, state_name
+    array_states[cursor_now+1] AS act_state, state_name,
+    main_event_field
     FROM states, ships
     INNER JOIN control_unit_data
     ON fk_ship = id_ship
@@ -33,7 +34,8 @@ let fRoadsteadNow = function(params){
     const query = `SELECT 
     id_control_unit_data, ship_description,
     MAX_TRIP.last_record AS last_record, 
-    array_states[cursor_now+1] AS act_state, state_name
+    array_states[cursor_now+1] AS act_state, state_name,
+    main_event_field
     FROM states, ships
     INNER JOIN control_unit_data
     ON fk_ship = id_ship

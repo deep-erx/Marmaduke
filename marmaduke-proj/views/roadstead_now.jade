@@ -5,7 +5,14 @@ block content
         thead
             th="TRIP"
             th="SHIP"
+            th="CURRENT OPS"
+            th="DETAILS"
+            th="TIMESTAMP"
         tbody
             each cuData in allRoadsteadNow
-                td=cuData.id_control_unit_data
-                td=cuData.ship_description
+                tr
+                    td=cuData.id_control_unit_data
+                    td=cuData.state_name
+                    td=cuData.ship_description
+                    td=cuData.main_event_field
+                    td=cuData.last_record
