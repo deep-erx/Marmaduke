@@ -21,9 +21,8 @@ router.get("/api/moored_now/:id", (req, res, next) => {
 
   // async/await call
   (async ()=> {
-
+    const client = await pool.connect();
     try {
-      const client = await pool.connect();
       const params = {
         mdate: mdate,
         statesOfMooring: configuration.STATES_OF_MOORING,
@@ -48,8 +47,8 @@ router.get("/api/roadstead_now/:id", (req, res, next)=>{
 
   // async/await call
   (async()=>{
+    const client = await pool.connect();
     try {
-      const client = await pool.connect();
       const params = {
         statesOfRoadstead: configuration.STATES_OF_ROADSTEAD,
         id: id,
