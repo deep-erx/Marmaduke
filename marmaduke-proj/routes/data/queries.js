@@ -34,13 +34,9 @@ let fShipsStaticData = function(params){
     const query = `SELECT 
     id_control_unit_data, ship_description, 
     ts_main_event_field_val
-    FROM ships
+    FROM trips_logs
     INNER JOIN control_unit_data
-    ON fk_ship = id_ship
-    INNER JOIN sequences
-    ON control_unit_data.fk_portinformer = sequences.fk_portinformer
-    INNER JOIN trips_logs
-    ON fk_control_unit_data = id_control_unit_data 
+    ON fk_control_unit_data = id_control_unit_data
     WHERE LENGTH(ts_main_event_field_val) > 4
     AND DATE(ts_main_event_field_val) = '${params.mdate}'
     AND fk_state in ${params.statesOfInterest}
