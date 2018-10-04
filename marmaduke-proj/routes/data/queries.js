@@ -40,6 +40,7 @@ let fShipsStaticData = function(params){
     INNER JOIN ships
     ON fk_ship = id_ship
     WHERE LENGTH(ts_main_event_field_val) > 4
+    AND control_unit_data.fk_portinformer = ${params.id}
     AND DATE(ts_main_event_field_val) = '${params.mdate}'
     AND fk_state in ${params.statesOfInterest}
     ORDER BY id_control_unit_data`;
