@@ -51,7 +51,9 @@ let fShipsStaticData = function(params){
         GROUP BY fk_control_unit_data
     ) as MAX_TRIP 
     ON MAX_TRIP.fk_control_unit_data = id_control_unit_data
-    WHERE control_unit_data.fk_portinformer = ${params.id}
+    WHERE array_states[cursor_now+1] = states.id_state
+    AND array_states[cursor_now+1] in ${params.statesOfInterest}
+    AND control_unit_data.fk_portinformer = ${params.id}
     ORDER BY id_control_unit_data`;
 
     return query;
