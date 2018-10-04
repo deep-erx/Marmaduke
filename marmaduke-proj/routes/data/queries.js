@@ -37,6 +37,8 @@ let fShipsStaticData = function(params){
     FROM trips_logs
     INNER JOIN control_unit_data
     ON fk_control_unit_data = id_control_unit_data
+    INNER JOIN ships
+    ON fk_ship = id_ship
     WHERE LENGTH(ts_main_event_field_val) > 4
     AND DATE(ts_main_event_field_val) = '${params.mdate}'
     AND fk_state in ${params.statesOfInterest}
