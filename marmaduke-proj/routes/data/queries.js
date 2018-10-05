@@ -48,8 +48,19 @@ let fShipsStaticData = function(params){
     return query;
 }
 
+let fShipsArrivalPrevData = function(params){
+    const query = `SELECT ts_arrival_prevision,
+    ship_description 
+    FROM planned_arrivals INNER JOIN ships
+    ON fk_ship = id_ship
+    WHERE is_active = true
+    AND fk_portinformer = ${params.id}`;
+
+    return query;
+}
 
 module.exports = {
     shipsNow: fShipsNow,
-    shipsStatic: fShipsStaticData
+    shipsStatic: fShipsStaticData,
+    shipsArrivalPrevs: fShipsArrivalPrevData,
 };

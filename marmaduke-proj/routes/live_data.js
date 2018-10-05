@@ -11,6 +11,7 @@ router.get("/", callbacks.cbHomePage());
 /* LAST ACTIVITY DATA */
 router.get("/api/moored_now/:id", callbacks.cbLiveDataTable("moored_now", configuration.STATES_OF_MOORING));
 router.get("/api/roadstead_now/:id", callbacks.cbLiveDataTable("roadstead_now", configuration.STATES_OF_ROADSTEAD));
+router.get("/api/arrival_previsions_now/:id", callbacks.cbPrevisionDataTable("arrival_previsions_now"));
 
 /* STATIC DATA */
 router.get("/api/arrivals_now/:id", callbacks.cbStaticDataTable("arrivals_now", configuration.STATES_OF_ARRIVALS));
