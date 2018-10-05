@@ -1,4 +1,4 @@
-# Marmaduke
+# Marma Duke
 REST APIs - Documentation 
 
 **REAL TIME DATA**
