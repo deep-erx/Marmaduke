@@ -9,8 +9,7 @@ REST APIs - Documentation
 |At roadstead now|/api/roadstead_now/:id_portinformer/|Get portinformer's currently at roadstead|
 |Arrivals|/api/arrivals_now/:id|Get portinformer's arrivals today| 
 |Departures|/api/departures_now/:id    | Get portinformer's departures today| 
-|Arrival previsions today|    |    |
-|Departures now|    |    | 
+|Arrival previsions today|/api/arrival_previsions_now/:id    |Get portinformer's arrival previsions  |
 |Traffic list|    |    |
 |Commercial operations|    |    |
 
