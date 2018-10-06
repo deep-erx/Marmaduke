@@ -1,0 +1,20 @@
+extends root_layout
+
+block content
+    table
+        thead
+            th="TRIP"
+            th="SHIP"
+            th="SHIPPED GOODS"
+            th="TYPE"
+            th="QUANTITY"
+            th="UNIT"
+        each cuData in allDataNow
+            tr
+                td=cuData.id_control_unit_data
+                td=cuData.ship_description
+                td=cuData.goods_category
+                td=cuData.goods_mvmnt_type
+                td=cuData.quantity
+                td=cuData.unit
+                

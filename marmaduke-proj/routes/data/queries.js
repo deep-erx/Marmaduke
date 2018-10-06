@@ -1,7 +1,7 @@
 "use strict";
 
-let fShipsNow = function(params){
-    const query = `SELECT 
+let qShipsNow = function(params){
+    return `SELECT 
     id_control_unit_data, ship_description,
     MAX_TRIP.last_record AS last_record, 
     array_states[cursor_now+1] AS act_state, state_name,
@@ -26,12 +26,10 @@ let fShipsNow = function(params){
     AND array_states[cursor_now+1] in ${params.statesOfInterest}
     AND control_unit_data.fk_portinformer = ${params.id}
     ORDER BY id_control_unit_data`;
-
-    return query;
 }
 
-let fShipsStaticData = function(params){
-    const query = `SELECT 
+let qShipsStaticData = function(params){
+    return `SELECT 
     id_control_unit_data, ship_description, 
     ts_main_event_field_val
     FROM trips_logs
@@ -44,23 +42,48 @@ let fShipsStaticData = function(params){
     AND DATE(ts_main_event_field_val) = '${params.mdate}'
     AND fk_state in ${params.statesOfInterest}
     ORDER BY id_control_unit_data`;
-
-    return query;
 }
 
-let fShipsArrivalPrevData = function(params){
-    const query = `SELECT ts_arrival_prevision,
+let qShipsArrivalPrevData = function(params){
+    return `SELECT ts_arrival_prevision,
     ship_description 
     FROM planned_arrivals INNER JOIN ships
     ON fk_ship = id_ship
     WHERE is_active = true
     AND fk_portinformer = ${params.id}`;
-
-    return query;
 }
 
+let qShippedGoodsNow = function(params){
+    return `SELECT id_control_unit_data, quantity, unit, 
+    ship_description, description as goods_category,
+    goods_mvmnt_type 
+    FROM goods_categories INNER JOIN shipped_goods 
+    ON fk_goods_category  = id_goods_category
+    INNER JOIN control_unit_data
+    on shipped_goods.fk_control_unit_data = id_control_unit_data
+    INNER JOIN ships
+    ON fk_ship = id_ship
+    WHERE control_unit_data.is_active = true
+    AND control_unit_data.fk_portinformer = ${params.id}`;
+} 
+
+let qTrafficListNow = function(params){
+    return `SELECT id_control_unit_data, 
+    ship_description, num_container, num_camion, num_passengers, 
+    num_furgoni, num_rimorchi, num_auto, num_moto, num_camper,
+    num_bus, num_minibus, traffic_list_mvnt_type
+    FROM ships INNER JOIN control_unit_data
+    ON fk_ship = id_ship
+    INNER JOIN traffic_list 
+    ON fk_control_unit_data  = id_control_unit_data
+    WHERE control_unit_data.is_active = true
+    AND control_unit_data.fk_portinformer = ${params.id}`;
+} 
+
 module.exports = {
-    shipsNow: fShipsNow,
-    shipsStatic: fShipsStaticData,
-    shipsArrivalPrevs: fShipsArrivalPrevData,
+    shipsNow: qShipsNow,
+    shipsStatic: qShipsStaticData,
+    shipsArrivalPrevs: qShipsArrivalPrevData,
+    shippedGoodsNow: qShippedGoodsNow,
+    trafficListNow: qTrafficListNow
 };
