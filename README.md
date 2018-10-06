@@ -1,4 +1,4 @@
-# The Dook
+# Marmaduke
 REST APIs - Documentation 
 
 **REAL TIME DATA**
@@ -10,8 +10,8 @@ REST APIs - Documentation
 |Arrivals|/api/arrivals_now/:id|Get portinformer's arrivals today| 
 |Departures|/api/departures_now/:id    | Get portinformer's departures today| 
 |Arrival previsions today|/api/arrival_previsions_now/:id    |Get portinformer's arrival previsions  |
-|Traffic list|    |    |
-|Commercial operations|    |    |
+|Traffic list|/api/traffic_list_now/:id    |Get portinformer's traffic list data   |
+|Commercial operations|/api/shipped_goods_now/:id    |Get portinformer's shipped goods data    |
 
 
 **ARCHIVE DATA**
