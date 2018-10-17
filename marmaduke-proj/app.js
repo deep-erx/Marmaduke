@@ -5,7 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/live_data');
+var systemRoutes = require('./routes/system');
+var liveData = require('./routes/live_data');
 var archiveData = require('./routes/archive_data');
 
 var app = express();
@@ -21,9 +22,9 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 // ROOT URLs
-app.use('/', routes);
+app.use('/home', systemRoutes);
+app.use('/live_data', liveData);
 app.use('/archive_data', archiveData);
 
 /// catch 404 and forwarding to error handler
@@ -45,7 +46,7 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
-}
+};
 
 // production error handler
 // no stacktraces leaked to user

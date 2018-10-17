@@ -40,7 +40,7 @@ function cbLiveDataTable(tmpl_name, states){
     }
   }
 
-  function cbStaticDataTable(tmpl_name, states){
+function cbStaticDataTable(tmpl_name, states){
     return (req, res, next) => {
   
       const pool = new Pool(db_settings.AUTH_DB);
@@ -70,7 +70,7 @@ function cbLiveDataTable(tmpl_name, states){
     }
   }
 
-  function cbPrevisionDataTable(tmpl_name, states){
+function cbPrevisionDataTable(tmpl_name, states){
     return (req, res, next) => {
   
       const pool = new Pool(db_settings.AUTH_DB);
@@ -99,7 +99,7 @@ function cbLiveDataTable(tmpl_name, states){
     }
   }
 
-  function cbShippedGoodsDataTable(tmpl_name, states){
+function cbShippedGoodsDataTable(tmpl_name, states){
     return (req, res, next) => {
   
       const pool = new Pool(db_settings.AUTH_DB);
@@ -128,7 +128,7 @@ function cbLiveDataTable(tmpl_name, states){
     }
   }
 
-  function cbTrafficListDataTable(tmpl_name, states){
+function cbTrafficListDataTable(tmpl_name, states){
     return (req, res, next) => {
   
       const pool = new Pool(db_settings.AUTH_DB);
