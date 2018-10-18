@@ -28,6 +28,19 @@ let qShipsNow = function(params){
     ORDER BY id_control_unit_data`;
 }
 
+let qShipsArchive = function(params){
+    return `SELECT ship_description, MAX(ts_main_event_field_val) AS ts_max,
+    fk_control_unit_data
+    FROM trips_logs INNER JOIN control_unit_data 
+    ON fk_control_unit_data = id_control_unit_data
+    INNER JOIN ships on fk_ship = id_ship
+    WHERE fk_state in ${params.statesOfInterest}
+    AND control_unit_data.fk_portinformer = ${params.id}
+    AND ts_main_event_field_val BETWEEN '${params.startTimestamp}'
+    AND '${params.stopTimestamp}'
+    GROUP BY fk_control_unit_data, ship_description`;
+}
+
 let qShipsStaticData = function(params){
     return `SELECT 
     id_control_unit_data, ship_description, 
@@ -85,5 +98,6 @@ module.exports = {
     shipsStatic: qShipsStaticData,
     shipsArrivalPrevs: qShipsArrivalPrevData,
     shippedGoodsNow: qShippedGoodsNow,
-    trafficListNow: qTrafficListNow
+    trafficListNow: qTrafficListNow,
+    shipsArchive: qShipsArchive,
 };

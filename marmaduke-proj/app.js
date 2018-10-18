@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var systemRoutes = require('./routes/system');
+var systemDataRoutes = require('./routes/system_data');
 var liveData = require('./routes/live_data');
 var archiveData = require('./routes/archive_data');
 
@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ROOT URLs
-app.use('/home', systemRoutes);
+app.use('/home', systemDataRoutes);
 app.use('/live_data', liveData);
 app.use('/archive_data', archiveData);
 

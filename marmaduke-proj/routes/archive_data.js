@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
+let callbacks = require('./utils/router_callbacks');
+let configuration = require("./data/config/proj_settings");
 
-router.get('/todo', function(req, res) {
-  res.send('#TODO archive data');
-});
+router.get('/moored/:id/:startTimestamp/:stopTimestamp', callbacks.cbArchiveDataTable("archive_moored", configuration.STATES_OF_MOORING)),
+router.get('/roadstead/:id/:startTimestamp/:stopTimestamp', callbacks.cbArchiveDataTable("archive_roadstead", configuration.STATES_OF_ROADSTEAD)),
 
 module.exports = router;
