@@ -5,23 +5,23 @@ REST APIs - Documentation
 
 |API | URL | Description|
 |:----|:-----|:------------|
-|Moored now|/api/moored_now/:id_portinformer/|Get portinformer's currently moored|
-|At roadstead now|/api/roadstead_now/:id_portinformer/|Get portinformer's currently at roadstead|
-|Arrivals|/api/arrivals_now/:id|Get portinformer's arrivals today| 
-|Departures|/api/departures_now/:id    | Get portinformer's departures today| 
-|Arrival previsions today|/api/arrival_previsions_now/:id    |Get portinformer's arrival previsions  |
-|Traffic list|/api/traffic_list_now/:id    |Get portinformer's traffic list data   |
-|Commercial operations|/api/shipped_goods_now/:id    |Get portinformer's shipped goods data    |
+|Moored now|/live_data/moored/:id_portinformer/|Get portinformer's currently moored|
+|At roadstead now|/live_data/roadstead/:id_portinformer/|Get portinformer's currently at roadstead|
+|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| 
+|Departures|/live_data/departures/:id    | Get portinformer's departures today| 
+|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  |
+|Traffic list|/live_data/traffic_list/:id    |Get portinformer's traffic list data   |
+|Commercial operations|/live_data/shipped_goods/:id    |Get portinformer's shipped goods data    |
 
 
 **ARCHIVE DATA**
 
 |API | URL | Description|
 |:----|:-----|:------------|
-|Moored|/api/moored/:start/:stop/:id_portinformer/|Get portinformer moored|
-|At roadstead|/api/roadstead/:start/:stop/:id_portinformer/|Get portinformer at roadstead|
+|Moored|/archive_data/moored/:id_portinformer/:startTimestamp/:stopTimestamp/|Get portinformer moored|
+|At roadstead|/archive_data/roadstead/:id_portinformer/:startTimestamp/:stopTimestamp/|Get portinformer at roadstead|
 |Arrival previsions|    |    |
-|Arrivals|    |    | 
-|Departures|    |    | 
+|Arrivals|/archive_data/arrivals/:id_portinformer/:startTimestamp/:stopTimestamp/|Get portinformer arrivals|
+|Departures|/archive_data/departures/:id_portinformer/:startTimestamp/:stopTimestamp/|Get portinformer departures| 
 |Traffic list|    |    |
 |Commercial operations|    |    |
