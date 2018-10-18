@@ -1,0 +1,13 @@
+extends root_layout
+
+block content
+    table
+        thead
+            th="TRIP"
+            th="SHIP"
+            th="TIMESTAMP"
+        each cuData in allDataArchived
+            tr
+                td=cuData.fk_control_unit_data
+                td=cuData.ship_description
+                td=cuData.ts_max
