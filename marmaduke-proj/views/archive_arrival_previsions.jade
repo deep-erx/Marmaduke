@@ -1,0 +1,10 @@
+extends root_layout
+block content
+    table
+        thead
+            th="SHIP"
+            th="ARRIVAL PREVISION"
+        each cuData in allDataArchived
+            tr
+                td=cuData.ship_description
+                td=cuData.ts_arrival_prevision

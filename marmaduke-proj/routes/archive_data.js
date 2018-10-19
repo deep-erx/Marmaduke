@@ -7,5 +7,6 @@ router.get('/moored/:id/:startTimestamp/:stopTimestamp', callbacks.cbArchiveData
 router.get('/roadstead/:id/:startTimestamp/:stopTimestamp', callbacks.cbArchiveDataTable("archive_roadstead", configuration.STATES_OF_ROADSTEAD)),
 router.get('/arrivals/:id/:startTimestamp/:stopTimestamp', callbacks.cbArchiveDataTable("archive_arrivals", configuration.STATES_OF_ARRIVALS)),
 router.get('/departures/:id/:startTimestamp/:stopTimestamp', callbacks.cbArchiveDataTable("archive_departures", configuration.STATES_OF_DEPARTURES)),
+router.get('/arrival_previsions/:id/:inputDate', callbacks.cbArrivalPrevisionsArchive("archive_arrival_previsions")),
 
 module.exports = router;

@@ -123,7 +123,6 @@ function cbPrevisionDataTable(tmpl_name, states){
         try {
           const params = {
             mdate: mdate,
-            statesOfInterest: states,
             id: id
           };
   
@@ -131,6 +130,36 @@ function cbPrevisionDataTable(tmpl_name, states){
           
           const records = await client.query(query);
           res.render(tmpl_name, {allDataNow: records.rows});
+  
+        } finally {
+          client.release();
+        }
+      })().catch(e => console.log(e.stack));
+    }
+}
+
+function cbArrivalPrevisionsArchive(tmpl_name){
+    return (req, res, next) => {
+  
+      const pool = new Pool(db_settings.AUTH_DB);
+      const id = req.params.id;
+      const inputDate = req.params.inputDate;
+  
+      // async/await call
+      (async ()=> {
+        const client = await pool.connect();
+        try {
+          const params = {
+            inputDate: inputDate,
+            id: id
+          };
+  
+          let query = queries.arrivalPrevisionsArchive(params);
+          
+          console.log(query);
+
+          const records = await client.query(query);
+          res.render(tmpl_name, {allDataArchived: records.rows});
   
         } finally {
           client.release();
@@ -209,6 +238,7 @@ module.exports = {
     cbLiveDataTable: cbLiveDataTable,
     cbStaticDataTable: cbStaticDataTable,
     cbPrevisionDataTable: cbPrevisionDataTable,
+    cbArrivalPrevisionsArchive: cbArrivalPrevisionsArchive,
     cbShippedGoodsDataTable: cbShippedGoodsDataTable,
     cbTrafficListDataTable: cbTrafficListDataTable,
     cbArchiveDataTable: cbArchiveDataTable

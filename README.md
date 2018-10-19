@@ -20,7 +20,7 @@ REST APIs - Documentation
 |:----|:-----|:------------|
 |Moored|/archive_data/moored/:id/:startTimestamp/:stopTimestamp/|Get portinformer moored|
 |At roadstead|/archive_data/roadstead/:id/:startTimestamp/:stopTimestamp/|Get portinformer at roadstead|
-|Arrival previsions|    |    |
+|Arrival previsions|/archive_data/arrival_previsions/:id    |Get portinformer's arrival previsions  |
 |Arrivals|/archive_data/arrivals/:id/:startTimestamp/:stopTimestamp/|Get portinformer arrivals|
 |Departures|/archive_data/departures/:id/:startTimestamp/:stopTimestamp/|Get portinformer departures| 
 |Traffic list|    |    |

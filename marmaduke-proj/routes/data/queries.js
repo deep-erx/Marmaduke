@@ -66,6 +66,16 @@ let qShipsArrivalPrevData = function(params){
     AND fk_portinformer = ${params.id}`;
 }
 
+let qArrivalPrevisionsArchive = function(params){
+    return `SELECT ts_arrival_prevision,
+    ship_description 
+    FROM planned_arrivals INNER JOIN ships
+    ON fk_ship = id_ship
+    WHERE LENGTH(ts_arrival_prevision) > 0
+    AND ts_arrival_prevision::DATE = '${params.inputDate}' 
+    AND fk_portinformer = ${params.id}`;
+}
+
 let qShippedGoodsNow = function(params){
     return `SELECT id_control_unit_data, quantity, unit, 
     ship_description, description as goods_category,
@@ -100,4 +110,5 @@ module.exports = {
     shippedGoodsNow: qShippedGoodsNow,
     trafficListNow: qTrafficListNow,
     shipsArchive: qShipsArchive,
+    arrivalPrevisionsArchive: qArrivalPrevisionsArchive,
 };
