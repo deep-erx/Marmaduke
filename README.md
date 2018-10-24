@@ -4,7 +4,7 @@ REST APIs - Documentation
 **REAL TIME DATA**
 
 |-|API | URL | Description|JSON|
-|:----|:-----|:------------|
+|:|:----|:-----|:------------|:--|
 |1|Moored now|/live_data/moored/:id/|Get portinformer's currently moored| * |
 |2|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead|
 |3|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| 
