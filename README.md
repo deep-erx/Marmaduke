@@ -27,8 +27,8 @@ REST APIs - Documentation
 |Commercial operations|    |    |
 
 
-** JSON documentation **
-## R1 ##
+**JSON documentation**
+##R1 format:##
 ```json
 { id_trip: {
     id_trip: <string>,
