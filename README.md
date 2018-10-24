@@ -29,7 +29,7 @@ REST APIs - Documentation
 
 **Format details**
 
-##R1 format:##
+R1:
 
 ```json
 { id_trip: {
