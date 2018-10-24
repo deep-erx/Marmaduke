@@ -10,7 +10,7 @@ const {Pool, client} = require('pg');
  * Callback list
  */
 
-function cbLiveDataTable(tmpl_name, states){
+function cbLiveDataTable(tmpl_name, shipStates){
     return (req, res, next) => {
   
       const pool = new Pool(db_settings.AUTH_DB);
@@ -23,14 +23,35 @@ function cbLiveDataTable(tmpl_name, states){
         try {
           const params = {
             mdate: mdate,
-            statesOfInterest: states,
             id: id
           };
   
-          let query = queries.shipsNow(params);
+          params.stateOfInterest = shipStates.MOORING;
+          let mooringQuery = queries.shipsNow(params);
+          const mooredRecords = await client.query(mooringQuery);
 
-          const records = await client.query(query);
-          res.render(tmpl_name, {allDataNow: records.rows});
+          params.stateOfInterest = shipStates.MOORING_TO_MOORING;
+          let mooring2mooringQuery = queries.shipsNow(params);
+          const mooring2mooringRecords = await client.query(mooring2mooringQuery);
+
+          params.stateOfInterest = shipStates.ROADSTEAD_TO_MOORING;
+          let roadstead2mooringQuery = queries.shipsNow(params);
+          const roadstead2mooringRecords = await client.query(roadstead2mooringQuery);
+
+          params.stateOfInterest = shipStates.WARPING;
+          let warpingQuery = queries.shipsNow(params);
+          const warpingRecords = await client.query(warpingQuery);
+
+          params.stateOfInterest = shipStates.SIDE_CHANGING;
+          let sideChangingQuery = queries.shipsNow(params);
+          const sideChangingRecords = await client.query(sideChangingQuery);
+
+          let records = mooredRecords.rows.concat(mooring2mooringRecords.rows,
+                                             roadstead2mooringRecords.rows,
+                                             warpingRecords.rows,
+                                             sideChangingRecords.rows)
+
+          res.render(tmpl_name, {allDataNow: records});
   
         } finally {
           client.release();

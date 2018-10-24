@@ -1,32 +1,49 @@
 "use strict";
 
 let qShipsNow = function(params){
-    return `SELECT 
-    id_control_unit_data, ship_description,
-    MAX_TRIP.last_record AS last_record, 
-    array_states[cursor_now+1] AS act_state, state_name,
-    main_event_field
-    FROM states, ships
-    INNER JOIN control_unit_data
-    ON fk_ship = id_ship
-    INNER JOIN sequences
-    ON control_unit_data.fk_portinformer = sequences.fk_portinformer
-    INNER JOIN (
-        SELECT fk_control_unit_data,
-        MAX(ts_main_event_field_val) AS last_record
-        FROM trips_logs
-        WHERE fk_state in ${params.statesOfInterest} 
-        GROUP BY fk_control_unit_data
-    ) as MAX_TRIP 
-    ON MAX_TRIP.fk_control_unit_data = id_control_unit_data
-    WHERE (is_active = true
-    OR on_hold = true
-    OR ts_archived >= '${params.mdate}')
-    AND array_states[cursor_now+1] = states.id_state
-    AND array_states[cursor_now+1] in ${params.statesOfInterest}
-    AND control_unit_data.fk_portinformer = ${params.id}
-    ORDER BY id_control_unit_data`;
+    return `SELECT id_control_unit_data, ship_description, ts_fine_ormeggio, 
+            quays.description AS quay_description, berths.description AS berth_description
+            FROM data_ormeggio_nave 
+            INNER JOIN control_unit_data
+            ON fk_control_unit_data = id_control_unit_data
+            INNER JOIN ships 
+            ON fk_ship = id_ship
+            INNER JOIN trips_logs
+            ON trips_logs.fk_control_unit_data = id_control_unit_data
+            INNER JOIN maneuverings
+            ON fk_maneuvering = id_maneuvering
+            INNER JOIN quays
+            ON fk_stop_quay = id_quay
+            INNER JOIN berths
+            ON fk_stop_berth = id_berth
+            WHERE trips_logs.fk_state = ${params.stateOfInterest}
+            AND is_active = true
+            AND trips_logs.fk_portinformer = ${params.id}
+            AND data_ormeggio_nave.id_data_ormeggio_nave = data_table_id::INTEGER`;
 }
+
+let qMooredNow = function(params){
+    return `SELECT id_control_unit_data, ship_description, ts_fine_ormeggio, 
+            quays.description, berths.description
+            FROM data_ormeggio_nave 
+            INNER JOIN control_unit_data
+            ON fk_control_unit_data = id_control_unit_data
+            INNER JOIN ships 
+            ON fk_ship = id_ship
+            INNER JOIN trips_logs
+            ON trips_logs.fk_control_unit_data = id_control_unit_data
+            INNER JOIN maneuverings
+            ON fk_maneuvering = id_maneuvering
+            INNER JOIN quays
+            ON fk_stop_quay = id_quay
+            INNER JOIN berths
+            ON fk_stop_berth = id_berth
+            WHERE trips_logs.fk_state = ${params.id_state}
+            AND is_active = true
+            AND trips_logs.fk_portinformer = ${params.id}
+            AND data_ormeggio_nave.id_data_ormeggio_nave = data_table_id::INTEGER`;
+}
+
 
 let qShipsArchive = function(params){
     return `SELECT ship_description, MAX(ts_main_event_field_val) AS ts_max,
@@ -110,5 +127,6 @@ module.exports = {
     shippedGoodsNow: qShippedGoodsNow,
     trafficListNow: qTrafficListNow,
     shipsArchive: qShipsArchive,
+    mooredNow: qMooredNow,
     arrivalPrevisionsArchive: qArrivalPrevisionsArchive,
 };

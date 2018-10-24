@@ -1,4 +1,14 @@
+STATES = {
+    MOORING: "17",
+    MOORING_TO_MOORING: "18",
+    ROADSTEAD_TO_MOORING: "20",
+    WARPING: "21",
+    SIDE_CHANGING: "22"
+}
+    
+
 module.exports = {
+    SHIP_STATES: STATES,
     STATES_OF_MOORING: "(17, 18, 20, 21, 22)",
     STATES_OF_ROADSTEAD: "(16, 19, 23)",
     STATES_OF_ARRIVAL_PREVISION: "(10)",

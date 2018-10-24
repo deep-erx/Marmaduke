@@ -5,13 +5,13 @@ block content
         thead
             th="TRIP"
             th="SHIP"
-            th="CURRENT OPS"
-            th="DETAILS"
             th="TIMESTAMP"
+            th="QUAY"
+            th="BERTH"
         each cuData in allDataNow
             tr
                 td=cuData.id_control_unit_data
                 td=cuData.ship_description
-                td=cuData.state_name
-                td=cuData.main_event_field
-                td=cuData.last_record
+                td=cuData.ts_fine_ormeggio
+                td=cuData.quay_description
+                td=cuData.berth_description
