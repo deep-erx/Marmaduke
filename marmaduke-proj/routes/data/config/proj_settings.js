@@ -1,9 +1,24 @@
 STATES = {
-    MOORING: "17",
-    MOORING_TO_MOORING: "18",
-    ROADSTEAD_TO_MOORING: "20",
-    WARPING: "21",
-    SIDE_CHANGING: "22"
+    MOORING: {
+        TABLE_NAME: "data_ormeggio_nave", 
+        ID: "17"
+        },
+    MOORING_TO_MOORING: {
+        TABLE_NAME: "data_da_ormeggio_a_ormeggio",
+        ID: "18"
+        },
+    ROADSTEAD_TO_MOORING: {
+        TABLE_NAME: "data_da_rada_a_ormeggio",
+        ID: "20"
+        },
+    WARPING: {
+        TABLE_NAME: "data_tonneggio", 
+        ID: "21"
+    },
+    SIDE_CHANGING: {
+        TABLE_NAME: "data_rotazione",
+        ID: "22"
+    }
 }
     
 

@@ -1,11 +1,49 @@
 "use strict";
 
-let qShipsNow = function(params){
+let allActiveIDs = function(fkPortinformer, state){
+    return `SELECT id_control_unit_data
+            FROM control_unit_data
+            INNER JOIN sequences
+            ON control_unit_data.fk_portinformer = sequences.fk_portinformer
+            WHERE is_active = true
+            AND array_states[cursor_now+1] = ${state} 
+            AND control_unit_data.fk_portinformer = ${fkPortinformer}`;
+}
+
+
+let mooredNow = function(tableName, idControlUnitData){
+    return `SELECT id_control_unit_data, ship_description, quays.description AS stop_quay, 
+            berths.description AS stop_berth, ts_fine_ormeggio 
+            FROM ${tableName}
+            INNER JOIN trips_logs
+            ON ${tableName}.fk_control_unit_data = trips_logs.fk_control_unit_data
+            INNER JOIN maneuverings
+            ON fk_maneuvering = id_maneuvering
+            INNER JOIN quays
+            ON fk_stop_quay = id_quay
+            INNER JOIN berths
+            ON fk_stop_berth = id_berth
+            INNER JOIN control_unit_data
+            ON maneuverings.fk_control_unit_data = id_control_unit_data
+            INNER JOIN ships
+            ON fk_ship = id_ship
+            WHERE trips_logs.fk_control_unit_data = ${idControlUnitData}
+            ORDER BY id_trip_log DESC LIMIT 1`;
+}
+
+let shipsNow = function(params){
+    return ``;
+};
+
+
+let oldQShipsNow = function(params){
     return `SELECT id_control_unit_data, ship_description, ts_fine_ormeggio, 
             quays.description AS quay_description, berths.description AS berth_description
-            FROM data_ormeggio_nave 
+            FROM ${params.tableName} 
             INNER JOIN control_unit_data
             ON fk_control_unit_data = id_control_unit_data
+            INNER JOIN sequences
+            ON sequences.fk_portinformer = control_unit_data.fk_portinformer
             INNER JOIN ships 
             ON fk_ship = id_ship
             INNER JOIN trips_logs
@@ -18,32 +56,10 @@ let qShipsNow = function(params){
             ON fk_stop_berth = id_berth
             WHERE trips_logs.fk_state = ${params.stateOfInterest}
             AND is_active = true
+            AND array_states[cursor_now+1] = ${params.stateOfInterest}
             AND trips_logs.fk_portinformer = ${params.id}
-            AND data_ormeggio_nave.id_data_ormeggio_nave = data_table_id::INTEGER`;
+            AND ${params.tableName}.id_${params.tableName} = data_table_id::INTEGER`;
 }
-
-let qMooredNow = function(params){
-    return `SELECT id_control_unit_data, ship_description, ts_fine_ormeggio, 
-            quays.description, berths.description
-            FROM data_ormeggio_nave 
-            INNER JOIN control_unit_data
-            ON fk_control_unit_data = id_control_unit_data
-            INNER JOIN ships 
-            ON fk_ship = id_ship
-            INNER JOIN trips_logs
-            ON trips_logs.fk_control_unit_data = id_control_unit_data
-            INNER JOIN maneuverings
-            ON fk_maneuvering = id_maneuvering
-            INNER JOIN quays
-            ON fk_stop_quay = id_quay
-            INNER JOIN berths
-            ON fk_stop_berth = id_berth
-            WHERE trips_logs.fk_state = ${params.id_state}
-            AND is_active = true
-            AND trips_logs.fk_portinformer = ${params.id}
-            AND data_ormeggio_nave.id_data_ormeggio_nave = data_table_id::INTEGER`;
-}
-
 
 let qShipsArchive = function(params){
     return `SELECT ship_description, MAX(ts_main_event_field_val) AS ts_max,
@@ -121,12 +137,12 @@ let qTrafficListNow = function(params){
 } 
 
 module.exports = {
-    shipsNow: qShipsNow,
+    mooredNow: mooredNow,
     shipsStatic: qShipsStaticData,
     shipsArrivalPrevs: qShipsArrivalPrevData,
     shippedGoodsNow: qShippedGoodsNow,
     trafficListNow: qTrafficListNow,
     shipsArchive: qShipsArchive,
-    mooredNow: qMooredNow,
     arrivalPrevisionsArchive: qArrivalPrevisionsArchive,
+    allActiveIDs: allActiveIDs
 };

@@ -10,7 +10,7 @@ const {Pool, client} = require('pg');
  * Callback list
  */
 
-function cbLiveDataTable(tmpl_name, shipStates){
+function cbMooredNowTable(tmpl_name, shipStates){
     return (req, res, next) => {
   
       const pool = new Pool(db_settings.AUTH_DB);
@@ -26,33 +26,44 @@ function cbLiveDataTable(tmpl_name, shipStates){
             id: id
           };
   
-          params.stateOfInterest = shipStates.MOORING;
-          let mooringQuery = queries.shipsNow(params);
-          const mooredRecords = await client.query(mooringQuery);
+          let dataContainer = [];
 
-          params.stateOfInterest = shipStates.MOORING_TO_MOORING;
-          let mooring2mooringQuery = queries.shipsNow(params);
-          const mooring2mooringRecords = await client.query(mooring2mooringQuery);
+          let allMooredIDsQuery = queries.allActiveIDs(params.id, STATES.MOORING.ID);
+          const allMooredIDs = await client.query(allMooredIDsQuery);
+          let mooredRecords = allMooredIDs.rows;
 
-          params.stateOfInterest = shipStates.ROADSTEAD_TO_MOORING;
-          let roadstead2mooringQuery = queries.shipsNow(params);
-          const roadstead2mooringRecords = await client.query(roadstead2mooringQuery);
+          for (let tripID of mooredRecords){
+            let mooredNowQuery = queries.mooredNow(STATES.MOORING.TABLE_NAME, tripID.id_control_unit_data);
+            let mooredNowRecords = await client.query(mooredNowQuery);
+            
+            dataContainer.push(mooredNowRecords.rows[0]);
+          } 
 
-          params.stateOfInterest = shipStates.WARPING;
-          let warpingQuery = queries.shipsNow(params);
-          const warpingRecords = await client.query(warpingQuery);
+          let allMoored2MooredIDsQuery = queries.allActiveIDs(params.id, STATES.MOORING_TO_MOORING.ID);
+          const allMoored2MooredIDs = await client.query(allMoored2MooredIDsQuery);
+          let moored2MooredRecords = allMoored2MooredIDs.rows;
 
-          params.stateOfInterest = shipStates.SIDE_CHANGING;
-          let sideChangingQuery = queries.shipsNow(params);
-          const sideChangingRecords = await client.query(sideChangingQuery);
+          for (let tripID of moored2MooredRecords){
+            let moored2MooredNowQuery = queries.mooredNow(STATES.MOORING_TO_MOORING.TABLE_NAME, tripID.id_control_unit_data);
+            let moored2MooredNowRecords = await client.query(moored2MooredNowQuery);
+            
+            dataContainer.push(moored2MooredNowRecords.rows[0]);
+          } 
 
-          let records = mooredRecords.rows.concat(mooring2mooringRecords.rows,
-                                             roadstead2mooringRecords.rows,
-                                             warpingRecords.rows,
-                                             sideChangingRecords.rows)
+          let allRoadstead2MooredIDsQuery = queries.allActiveIDs(params.id, STATES.ROADSTEAD_TO_MOORING.ID);
+          const allRoadstead2MooredIDs = await client.query(allRoadstead2MooredIDsQuery);
+          let roadstead2MooredRecords = allRoadstead2MooredIDs.rows;
 
-          res.render(tmpl_name, {allDataNow: records});
-  
+          for (let tripID of roadstead2MooredRecords){
+            let roadstead2MooredNowQuery = queries.mooredNow(STATES.ROADSTEAD_TO_MOORING.TABLE_NAME, tripID.id_control_unit_data);
+            let roadstead2MooredNowRecords = await client.query(roadstead2MooredNowQuery);
+            
+            dataContainer.push(roadstead2MooredNowRecords.rows[0]);
+          } 
+
+          console.log(dataContainer);
+          res.render("moored_now", {allDataNow: dataContainer});
+
         } finally {
           client.release();
         }
@@ -256,7 +267,7 @@ function cbHomePage(){
 
 module.exports = {
     cbHomePage: cbHomePage,
-    cbLiveDataTable: cbLiveDataTable,
+    cbMooredNowTable: cbMooredNowTable,
     cbStaticDataTable: cbStaticDataTable,
     cbPrevisionDataTable: cbPrevisionDataTable,
     cbArrivalPrevisionsArchive: cbArrivalPrevisionsArchive,
