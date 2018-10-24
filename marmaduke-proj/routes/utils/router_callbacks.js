@@ -26,17 +26,18 @@ function cbMooredNowTable(tmpl_name, shipStates){
             id: id
           };
   
-          let dataContainer = [];
+          let dataContainer = {};
 
           let allMooredIDsQuery = queries.allActiveIDs(params.id, STATES.MOORING.ID);
           const allMooredIDs = await client.query(allMooredIDsQuery);
           let mooredRecords = allMooredIDs.rows;
-
+          let counter = 0;
+          
           for (let tripID of mooredRecords){
             let mooredNowQuery = queries.mooredNow(STATES.MOORING.TABLE_NAME, tripID.id_control_unit_data);
             let mooredNowRecords = await client.query(mooredNowQuery);
             
-            dataContainer.push(mooredNowRecords.rows[0]);
+            dataContainer[tripID.id_control_unit_data] = mooredNowRecords.rows[0];
           } 
 
           let allMoored2MooredIDsQuery = queries.allActiveIDs(params.id, STATES.MOORING_TO_MOORING.ID);
@@ -47,7 +48,7 @@ function cbMooredNowTable(tmpl_name, shipStates){
             let moored2MooredNowQuery = queries.mooredNow(STATES.MOORING_TO_MOORING.TABLE_NAME, tripID.id_control_unit_data);
             let moored2MooredNowRecords = await client.query(moored2MooredNowQuery);
             
-            dataContainer.push(moored2MooredNowRecords.rows[0]);
+            dataContainer[tripID.id_control_unit_data] = moored2MooredNowRecords.rows[0];
           } 
 
           let allRoadstead2MooredIDsQuery = queries.allActiveIDs(params.id, STATES.ROADSTEAD_TO_MOORING.ID);
@@ -58,11 +59,10 @@ function cbMooredNowTable(tmpl_name, shipStates){
             let roadstead2MooredNowQuery = queries.mooredNow(STATES.ROADSTEAD_TO_MOORING.TABLE_NAME, tripID.id_control_unit_data);
             let roadstead2MooredNowRecords = await client.query(roadstead2MooredNowQuery);
             
-            dataContainer.push(roadstead2MooredNowRecords.rows[0]);
+            dataContainer[tripID.id_control_unit_data] = roadstead2MooredNowRecords.rows[0];
           } 
 
-          console.log(dataContainer);
-          res.render("moored_now", {allDataNow: dataContainer});
+          res.send(dataContainer);
 
         } finally {
           client.release();

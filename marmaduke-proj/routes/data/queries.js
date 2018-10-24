@@ -12,8 +12,11 @@ let allActiveIDs = function(fkPortinformer, state){
 
 
 let mooredNow = function(tableName, idControlUnitData){
-    return `SELECT id_control_unit_data, ship_description, quays.description AS stop_quay, 
-            berths.description AS stop_berth, ts_fine_ormeggio 
+    return `SELECT id_control_unit_data AS id_trip, 
+            ship_description AS ship_name, 
+            quays.description AS stop_quay, 
+            berths.description AS stop_berth, 
+            ts_fine_ormeggio AS mooring_time
             FROM ${tableName}
             INNER JOIN trips_logs
             ON ${tableName}.fk_control_unit_data = trips_logs.fk_control_unit_data
