@@ -9,7 +9,7 @@ REST APIs - Documentation
 |2|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead||
 |3|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| |
 |4|Departures|/live_data/departures/:id    | Get portinformer's departures today|| 
-|5|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  |
+|5|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  ||
 |6|Traffic list|/live_data/traffic_list/:id    |Get portinformer's traffic list data   ||
 |7|Commercial operations|/live_data/shipped_goods/:id    |Get portinformer's shipped goods data    ||
 
