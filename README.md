@@ -3,15 +3,15 @@ REST APIs - Documentation
 
 **REAL TIME DATA**
 
-|API | URL | Description|
+|-|API | URL | Description|JSON|
 |:----|:-----|:------------|
-|Moored now|/live_data/moored/:id/|Get portinformer's currently moored|
-|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead|
-|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| 
-|Departures|/live_data/departures/:id    | Get portinformer's departures today| 
-|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  |
-|Traffic list|/live_data/traffic_list/:id    |Get portinformer's traffic list data   |
-|Commercial operations|/live_data/shipped_goods/:id    |Get portinformer's shipped goods data    |
+|1|Moored now|/live_data/moored/:id/|Get portinformer's currently moored| * |
+|2|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead|
+|3|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| 
+|4|Departures|/live_data/departures/:id    | Get portinformer's departures today| 
+|5|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  |
+|6|Traffic list|/live_data/traffic_list/:id    |Get portinformer's traffic list data   |
+|7|Commercial operations|/live_data/shipped_goods/:id    |Get portinformer's shipped goods data    |
 
 
 **ARCHIVE DATA**
