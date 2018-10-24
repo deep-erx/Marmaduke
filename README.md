@@ -25,3 +25,18 @@ REST APIs - Documentation
 |Departures|/archive_data/departures/:id/:startTimestamp/:stopTimestamp/|Get portinformer departures| 
 |Traffic list|    |    |
 |Commercial operations|    |    |
+
+
+** JSON documentation **
+## R1 ##
+```json
+{ id_trip: {
+    id_trip: <string>,
+    ship_name: <string>,
+    stop_quay: <string>,
+    stop_berth: <string>,
+    mooring_time: <string>
+    },
+...
+}
+```
