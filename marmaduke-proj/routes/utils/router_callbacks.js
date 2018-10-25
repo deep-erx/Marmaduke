@@ -10,69 +10,6 @@ const {Pool, client} = require('pg');
  * Callback list
  */
 
-function cbMooredNowTable(tmpl_name, shipStates){
-    return (req, res, next) => {
-  
-      const pool = new Pool(db_settings.AUTH_DB);
-      const id = req.params.id;
-      const mdate = moment().format('YYYY-MM-DD');
-  
-      // async/await call
-      (async ()=> {
-        const client = await pool.connect();
-        try {
-          const params = {
-            mdate: mdate,
-            id: id
-          };
-  
-          let dataContainer = {};
-
-          let allMooredIDsQuery = queries.allActiveIDs(params.id, STATES.MOORING.ID);
-          const allMooredIDs = await client.query(allMooredIDsQuery);
-          let mooredRecords = allMooredIDs.rows;
-          let counter = 0;
-          
-          for (let tripID of mooredRecords){
-            let mooredNowQuery = queries.mooredNow(STATES.MOORING.TABLE_NAME, tripID.id_control_unit_data);
-            let mooredNowRecords = await client.query(mooredNowQuery);
-            
-            dataContainer[tripID.id_control_unit_data] = mooredNowRecords.rows[0];
-          } 
-
-          let allMoored2MooredIDsQuery = queries.allActiveIDs(params.id, STATES.MOORING_TO_MOORING.ID);
-          const allMoored2MooredIDs = await client.query(allMoored2MooredIDsQuery);
-          let moored2MooredRecords = allMoored2MooredIDs.rows;
-
-          for (let tripID of moored2MooredRecords){
-            let moored2MooredNowQuery = queries.mooredNow(STATES.MOORING_TO_MOORING.TABLE_NAME, tripID.id_control_unit_data);
-            let moored2MooredNowRecords = await client.query(moored2MooredNowQuery);
-            
-            dataContainer[tripID.id_control_unit_data] = moored2MooredNowRecords.rows[0];
-          } 
-
-          let allRoadstead2MooredIDsQuery = queries.allActiveIDs(params.id, STATES.ROADSTEAD_TO_MOORING.ID);
-          const allRoadstead2MooredIDs = await client.query(allRoadstead2MooredIDsQuery);
-          let roadstead2MooredRecords = allRoadstead2MooredIDs.rows;
-
-          for (let tripID of roadstead2MooredRecords){
-            let roadstead2MooredNowQuery = queries.mooredNow(STATES.ROADSTEAD_TO_MOORING.TABLE_NAME, tripID.id_control_unit_data);
-            let roadstead2MooredNowRecords = await client.query(roadstead2MooredNowQuery);
-            
-            dataContainer[tripID.id_control_unit_data] = roadstead2MooredNowRecords.rows[0];
-          } 
-
-          res.send(dataContainer);
-
-        } finally {
-          client.release();
-        }
-  
-      })().catch(e => console.log(e.stack));
-    }
-}
-
-
 function cbArchiveDataTable(tmpl_name, states, startTimestamp, stopTimestamp){
     return (req, res, next) => {
   
@@ -98,8 +35,6 @@ function cbArchiveDataTable(tmpl_name, states, startTimestamp, stopTimestamp){
   
           let query = queries.shipsArchive(params);
           
-          console.log(query);
-
           const records = await client.query(query);
           res.render(tmpl_name, {allDataArchived: records.rows});
   
@@ -267,7 +202,6 @@ function cbHomePage(){
 
 module.exports = {
     cbHomePage: cbHomePage,
-    cbMooredNowTable: cbMooredNowTable,
     cbStaticDataTable: cbStaticDataTable,
     cbPrevisionDataTable: cbPrevisionDataTable,
     cbArrivalPrevisionsArchive: cbArrivalPrevisionsArchive,

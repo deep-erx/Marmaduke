@@ -34,6 +34,26 @@ let mooredNow = function(tableName, idControlUnitData){
             ORDER BY id_trip_log DESC LIMIT 1`;
 }
 
+let roadsteadNow = function(tableName, idControlUnitData){
+    return `SELECT id_control_unit_data AS id_trip, 
+            ship_description AS ship_name, 
+            anchorage_points.description AS anchorage_point, 
+            ts_disancoraggio AS anchorage_time
+            FROM ${tableName}
+            INNER JOIN trips_logs
+            ON ${tableName}.fk_control_unit_data = trips_logs.fk_control_unit_data
+            INNER JOIN maneuverings
+            ON fk_maneuvering = id_maneuvering
+            INNER JOIN anchorage_points
+            ON fk_stop_anchorage_point = id_anchorage_point
+            INNER JOIN control_unit_data
+            ON maneuverings.fk_control_unit_data = id_control_unit_data
+            INNER JOIN ships
+            ON fk_ship = id_ship
+            WHERE trips_logs.fk_control_unit_data = ${idControlUnitData}
+            ORDER BY id_trip_log DESC LIMIT 1`;
+}
+
 let shipsNow = function(params){
     return ``;
 };
@@ -141,6 +161,7 @@ let qTrafficListNow = function(params){
 
 module.exports = {
     mooredNow: mooredNow,
+    roadsteadNow: roadsteadNow,
     shipsStatic: qShipsStaticData,
     shipsArrivalPrevs: qShipsArrivalPrevData,
     shippedGoodsNow: qShippedGoodsNow,

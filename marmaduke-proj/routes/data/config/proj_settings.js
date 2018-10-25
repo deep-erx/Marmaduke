@@ -18,6 +18,14 @@ STATES = {
     SIDE_CHANGING: {
         TABLE_NAME: "data_rotazione",
         ID: "22"
+    },
+    ROADSTEAD: {
+        TABLE_NAME: "data_arrivo_in_rada",
+        ID: "16"
+    },
+    MOORING_TO_ROADSTEAD: {
+        TABLE_NAME: "data_da_ormeggio_a_rada",
+        ID: "19"
     }
 }
     
