@@ -32,12 +32,12 @@ REST APIs - Documentation
 R1:
 
 ```json
-{ id_trip: {
-    id_trip: <string>,
-    ship_name: <string>,
-    stop_quay: <string>,
-    stop_berth: <string>,
-    mooring_time: <string>
+{ "id_trip": {
+    "id_trip": <string>,
+    "ship_name": <string>,
+    "stop_quay": <string>,
+    "stop_berth": <string>,
+    "mooring_time": <string>
     },
 ...
 }
@@ -46,11 +46,11 @@ R1:
 R2:
 
 ```json
-{ id_trip: {
-    id_trip: <string>,
-    ship_name: <string>,
-    anchorage_point: <string>,
-    anchorage_time: <string>
+{ "id_trip": {
+    "id_trip": <string>,
+    "ship_name": <string>,
+    "anchorage_point": <string>,
+    "anchorage_time": <string>
     },
 ...
 }
