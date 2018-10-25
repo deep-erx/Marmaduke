@@ -11,6 +11,13 @@ let allActiveIDs = function(fkPortinformer, state){
 }
 
 
+let allPortinformerIDs = function(fkPortinformer){
+    return `SELECT id_control_unit_data
+            FROM control_unit_data
+            WHERE control_unit_data.fk_portinformer = ${fkPortinformer}`;
+}
+
+
 let mooredNow = function(tableName, idControlUnitData){
     return `SELECT id_control_unit_data AS id_trip, 
             ship_description AS ship_name, 
@@ -52,6 +59,20 @@ let roadsteadNow = function(tableName, idControlUnitData){
             ON fk_ship = id_ship
             WHERE trips_logs.fk_control_unit_data = ${idControlUnitData}
             ORDER BY id_trip_log DESC LIMIT 1`;
+}
+
+let arrivalsNow = function(portinformerID, today){
+    return `SELECT id_control_unit_data AS id_trip, 
+            ship_description AS ship_name,  
+            ts_avvistamento AS sighting_time
+            FROM data_avvistamento_nave
+            INNER JOIN control_unit_data
+            ON data_avvistamento_nave.fk_control_unit_data = id_control_unit_data
+            INNER JOIN ships
+            ON fk_ship = id_ship
+            WHERE control_unit_data.fk_portinformer = ${portinformerID}
+            AND LENGTH(ts_avvistamento) > 0
+            AND ts_avvistamento::DATE = '${today}'`;
 }
 
 let shipsNow = function(params){
@@ -162,11 +183,13 @@ let qTrafficListNow = function(params){
 module.exports = {
     mooredNow: mooredNow,
     roadsteadNow: roadsteadNow,
+    arrivalsNow: arrivalsNow,
     shipsStatic: qShipsStaticData,
     shipsArrivalPrevs: qShipsArrivalPrevData,
     shippedGoodsNow: qShippedGoodsNow,
     trafficListNow: qTrafficListNow,
     shipsArchive: qShipsArchive,
     arrivalPrevisionsArchive: qArrivalPrevisionsArchive,
-    allActiveIDs: allActiveIDs
+    allActiveIDs: allActiveIDs,
+    allPortinformerIDs: allPortinformerIDs
 };

@@ -6,9 +6,11 @@ let configuration = require("./data/config/proj_settings");
 let callbacks = require("./utils/router_callbacks");
 let liveCallbacks = require("./utils/live_data_callbacks");
 
-/* LAST ACTIVITY DATA */
-router.get("/moored/:id", liveCallbacks.cbMooredNowTable("moored_now", configuration.SHIP_STATES));
-router.get("/roadstead/:id", liveCallbacks.cbRoadsteadNowTable("roadstead_now", configuration.SHIP_STATES));
+/* LIVE DATA */
+router.get("/moored/:id", liveCallbacks.cbMooredNow());
+router.get("/roadstead/:id", liveCallbacks.cbRoadsteadNow());
+router.get("/arrivals/:id", liveCallbacks.cbArrivalsNow());
+
 
 //router.get("/roadstead/:id", callbacks.cbLiveDataTable("roadstead_now", configuration.STATES_OF_ROADSTEAD));
 router.get("/arrival_previsions/:id", callbacks.cbPrevisionDataTable("arrival_previsions_now"));
