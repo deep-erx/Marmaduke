@@ -5,8 +5,8 @@ REST APIs - Documentation
 
 |Nr|API | URL | Description|JSON response|
 |:--|:----|:-----|:------------|:--|
-|R1|Moored now|/live_data/moored/:id/|Get portinformer's currently moored| * |
-|R2|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead|*|
+|R1|Moored now|/live_data/moored/:id/|Get portinformer's currently moored| YES |
+|R2|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead|YES|
 |R3|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| |
 |R4|Departures|/live_data/departures/:id    | Get portinformer's departures today|| 
 |R5|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  ||
