@@ -38,7 +38,7 @@ let roadsteadNow = function(tableName, idControlUnitData){
     return `SELECT id_control_unit_data AS id_trip, 
             ship_description AS ship_name, 
             anchorage_points.description AS anchorage_point, 
-            ts_disancoraggio AS anchorage_time
+            ts_fine_ancoraggio AS anchorage_time
             FROM ${tableName}
             INNER JOIN trips_logs
             ON ${tableName}.fk_control_unit_data = trips_logs.fk_control_unit_data
