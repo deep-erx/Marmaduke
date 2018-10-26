@@ -14,7 +14,7 @@ router.get("/departures/:id", liveCallbacks.cbDeparturesNow());
 router.get("/arrival_previsions/:id", liveCallbacks.cbArrivalsPrevNow());
 
 //router.get("/roadstead/:id", callbacks.cbLiveDataTable("roadstead_now", configuration.STATES_OF_ROADSTEAD));
-router.get("/arrival_previsions/:id", callbacks.cbPrevisionDataTable("arrival_previsions_now"));
+//router.get("/arrival_previsions/:id", callbacks.cbPrevisionDataTable("arrival_previsions_now"));
 router.get("/shipped_goods/:id", callbacks.cbShippedGoodsDataTable("shipped_goods_now"));
 router.get("/traffic_list/:id", callbacks.cbTrafficListDataTable("traffic_list_now"));
 
