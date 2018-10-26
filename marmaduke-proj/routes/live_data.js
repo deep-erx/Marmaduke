@@ -11,6 +11,7 @@ router.get("/moored/:id", liveCallbacks.cbMooredNow());
 router.get("/roadstead/:id", liveCallbacks.cbRoadsteadNow());
 router.get("/arrivals/:id", liveCallbacks.cbArrivalsNow());
 router.get("/departures/:id", liveCallbacks.cbDeparturesNow());
+router.get("/arrival_previsions/:id", liveCallbacks.cbArrivalsPrevNow());
 
 //router.get("/roadstead/:id", callbacks.cbLiveDataTable("roadstead_now", configuration.STATES_OF_ROADSTEAD));
 router.get("/arrival_previsions/:id", callbacks.cbPrevisionDataTable("arrival_previsions_now"));

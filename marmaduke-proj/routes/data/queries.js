@@ -89,7 +89,17 @@ let departuresNow = function(portinformerID){
             AND ts_out_of_sight::DATE = current_date`;
 }
 
-
+let arrivalsPrevNow = function(portinformerID){
+    return `SELECT id_planned_arrival, 
+            ship_description AS ship_name,  
+            ts_arrival_prevision
+            FROM planned_arrivals
+            INNER JOIN ships
+            ON fk_ship = id_ship
+            WHERE planned_arrivals.fk_portinformer = ${portinformerID}
+            AND LENGTH(ts_arrival_prevision) > 4
+            AND ts_arrival_prevision::DATE = current_date`;
+}
 
 
 let shipsNow = function(params){
@@ -201,6 +211,7 @@ module.exports = {
     mooredNow: mooredNow,
     roadsteadNow: roadsteadNow,
     arrivalsNow: arrivalsNow,
+    arrivalsPrevNow: arrivalsPrevNow,
     departuresNow: departuresNow,
     shipsStatic: qShipsStaticData,
     shipsArrivalPrevs: qShipsArrivalPrevData,

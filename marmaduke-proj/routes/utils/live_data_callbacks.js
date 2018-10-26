@@ -207,10 +207,49 @@ function cbDeparturesNow(){
 } //end cbDeparturesNow
 
 
+function cbArrivalsPrevNow(){
+    return (req, res, next) => {
+  
+      const pool = new Pool(db_settings.AUTH_DB);
+      const id = req.params.id;
+  
+      (async ()=> {
+        // PREPARE DB DATA
+        const client = await pool.connect();
+        try {
+          const params = {
+            id: id
+          };
+  
+          // ARRIVAL PREVISIONS DATA
+          let arrivalsPrevNowQuery = queries.arrivalsPrevNow(id);
+          let arrivalsPrevNowRecords = await client.query(arrivalsPrevNowQuery);
+          
+          let dataContainer = {};
+          let counter = 0;
+          
+          arrivalsPrevNowRecords.rows.forEach(function(value){
+              dataContainer[counter] = value;
+              counter++;
+          });
+
+          // SEND DATA TO CLIENT
+          res.send(dataContainer);
+
+        } finally {
+          client.release();
+        }
+  
+      })().catch(e => console.log(e.stack));
+    }
+} //end cbArrivalsPrevNow
+
+
 
 module.exports = {
     cbMooredNow: cbMooredNow,
     cbRoadsteadNow: cbRoadsteadNow,
     cbArrivalsNow: cbArrivalsNow,
-    cbDeparturesNow: cbDeparturesNow
+    cbDeparturesNow: cbDeparturesNow,
+    cbArrivalsPrevNow: cbArrivalsPrevNow
 }
