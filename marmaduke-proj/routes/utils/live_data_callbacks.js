@@ -24,7 +24,6 @@ function cbMooredNow(){
         const client = await pool.connect();
         try {
           const params = {
-            mdate: mdate,
             id: id
           };
   
@@ -84,15 +83,13 @@ function cbRoadsteadNow(){
   
       const pool = new Pool(db_settings.AUTH_DB);
       const id = req.params.id;
-      const mdate = moment().format('YYYY-MM-DD');
-  
+
       // async/await call
       (async ()=> {
         //PREPARE DB DATA
         const client = await pool.connect();
         try {
           const params = {
-            mdate: mdate,
             id: id
           };
   
