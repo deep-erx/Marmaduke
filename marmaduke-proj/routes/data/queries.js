@@ -61,7 +61,7 @@ let roadsteadNow = function(tableName, idControlUnitData){
             ORDER BY id_trip_log DESC LIMIT 1`;
 }
 
-let arrivalsNow = function(portinformerID, today){
+let arrivalsNow = function(portinformerID){
     return `SELECT id_control_unit_data AS id_trip, 
             ship_description AS ship_name,  
             ts_avvistamento AS sighting_time
@@ -72,8 +72,25 @@ let arrivalsNow = function(portinformerID, today){
             ON fk_ship = id_ship
             WHERE control_unit_data.fk_portinformer = ${portinformerID}
             AND LENGTH(ts_avvistamento) > 0
-            AND ts_avvistamento::DATE = '${today}'`;
+            AND ts_avvistamento::DATE = current_date`;
 }
+
+let departuresNow = function(portinformerID){
+    return `SELECT id_control_unit_data AS id_trip, 
+            ship_description AS ship_name,  
+            ts_out_of_sight
+            FROM data_fuori_dal_porto
+            INNER JOIN control_unit_data
+            ON data_fuori_dal_porto.fk_control_unit_data = id_control_unit_data
+            INNER JOIN ships
+            ON fk_ship = id_ship
+            WHERE control_unit_data.fk_portinformer = ${portinformerID}
+            AND LENGTH(ts_out_of_sight) > 4
+            AND ts_out_of_sight::DATE = current_date`;
+}
+
+
+
 
 let shipsNow = function(params){
     return ``;
@@ -184,6 +201,7 @@ module.exports = {
     mooredNow: mooredNow,
     roadsteadNow: roadsteadNow,
     arrivalsNow: arrivalsNow,
+    departuresNow: departuresNow,
     shipsStatic: qShipsStaticData,
     shipsArrivalPrevs: qShipsArrivalPrevData,
     shippedGoodsNow: qShippedGoodsNow,

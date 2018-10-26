@@ -8,7 +8,7 @@ REST APIs - Documentation
 |R1|Moored now|/live_data/moored/:id/|Get portinformer's currently moored| YES |
 |R2|At roadstead now|/live_data/roadstead/:id/|Get portinformer's currently at roadstead|YES|
 |R3|Arrivals|/live_data/arrivals/:id|Get portinformer's arrivals today| YES |
-|R4|Departures|/live_data/departures/:id    | Get portinformer's departures today|| 
+|R4|Departures|/live_data/departures/:id    | Get portinformer's departures today|YES| 
 |R5|Arrival previsions today|/live_data/arrival_previsions/:id    |Get portinformer's arrival previsions  ||
 |R6|Traffic list|/live_data/traffic_list/:id    |Get portinformer's traffic list data   ||
 |R7|Commercial operations|/live_data/shipped_goods/:id    |Get portinformer's shipped goods data    ||
@@ -56,7 +56,6 @@ R2:
 }
 ```
 
-
 R3:
 
 ```json
@@ -64,6 +63,18 @@ R3:
     "id_trip": <string>,
     "ship_name": <string>,
     "sighting_time": <string>
+    },
+...
+}
+```
+
+R4:
+
+```json
+{ "counter": {
+    "id_trip": <string>,
+    "ship_name": <string>,
+    "ts_out_of_sight": <string>
     },
 ...
 }

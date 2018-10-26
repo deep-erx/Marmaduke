@@ -16,10 +16,11 @@ function cbMooredNow(){
   
       const pool = new Pool(db_settings.AUTH_DB);
       const id = req.params.id;
-      const mdate = moment().format('YYYY-MM-DD');
   
       // async/await call
       (async ()=> {
+
+        //PREPARE DB DATA
         const client = await pool.connect();
         try {
           const params = {
@@ -29,6 +30,7 @@ function cbMooredNow(){
   
           let dataContainer = {};
 
+          // MOORED
           let allMooredIDsQuery = queries.allActiveIDs(params.id, configuration.STATES.MOORING.ID);
           const allMooredIDs = await client.query(allMooredIDsQuery);
           let mooredRecords = allMooredIDs.rows;
@@ -41,6 +43,7 @@ function cbMooredNow(){
             dataContainer[tripID.id_control_unit_data] = mooredNowRecords.rows[0];
           } 
 
+          // MOORED to MOORED
           let allMoored2MooredIDsQuery = queries.allActiveIDs(params.id, configuration.STATES.MOORING_TO_MOORING.ID);
           const allMoored2MooredIDs = await client.query(allMoored2MooredIDsQuery);
           let moored2MooredRecords = allMoored2MooredIDs.rows;
@@ -52,6 +55,7 @@ function cbMooredNow(){
             dataContainer[tripID.id_control_unit_data] = moored2MooredNowRecords.rows[0];
           } 
 
+          // ROADSTEAD TO MOORED
           let allRoadstead2MooredIDsQuery = queries.allActiveIDs(params.id, configuration.STATES.ROADSTEAD_TO_MOORING.ID);
           const allRoadstead2MooredIDs = await client.query(allRoadstead2MooredIDsQuery);
           let roadstead2MooredRecords = allRoadstead2MooredIDs.rows;
@@ -63,6 +67,7 @@ function cbMooredNow(){
             dataContainer[tripID.id_control_unit_data] = roadstead2MooredNowRecords.rows[0];
           } 
 
+          // SEND DATA TO THE CLIENT
           res.send(dataContainer);
 
         } finally {
@@ -83,6 +88,7 @@ function cbRoadsteadNow(){
   
       // async/await call
       (async ()=> {
+        //PREPARE DB DATA
         const client = await pool.connect();
         try {
           const params = {
@@ -92,6 +98,7 @@ function cbRoadsteadNow(){
   
           let dataContainer = {};
 
+          //ROADSTEAD
           let allRoadsteadIDsQuery = queries.allActiveIDs(params.id, configuration.STATES.ROADSTEAD.ID);
           const allRoadsteadIDs = await client.query(allRoadsteadIDsQuery);
           let roadsteadRecords = allRoadsteadIDs.rows;
@@ -104,6 +111,7 @@ function cbRoadsteadNow(){
             dataContainer[tripID.id_control_unit_data] = roadsteadNowRecords.rows[0];
           } 
 
+          // MOORED TO ROADSTEAD
           let allMoored2RoadsteadIDsQuery = queries.allActiveIDs(params.id, configuration.STATES.MOORING_TO_ROADSTEAD.ID);
           const allMoored2RoadsteadIDs = await client.query(allMoored2RoadsteadIDsQuery);
           let moored2RoadsteadRecords = allMoored2RoadsteadIDs.rows;
@@ -115,6 +123,7 @@ function cbRoadsteadNow(){
             dataContainer[tripID.id_control_unit_data] = moored2RoadsteadNowRecords.rows[0];
           } 
 
+          // SEND DATA TO CLIENT
           res.send(dataContainer);
 
         } finally {
@@ -131,19 +140,17 @@ function cbArrivalsNow(){
   
       const pool = new Pool(db_settings.AUTH_DB);
       const id = req.params.id;
-      const mdate = moment().format('YYYY-MM-DD');
   
-      // async/await call
       (async ()=> {
+        // PREPARE DB DATA
         const client = await pool.connect();
         try {
           const params = {
-            mdate: mdate,
             id: id
           };
   
-          
-          let arrivalsNowQuery = queries.arrivalsNow(id, mdate);
+          // ARRIVALS DATA
+          let arrivalsNowQuery = queries.arrivalsNow(id);
           let arrivalsNowRecords = await client.query(arrivalsNowQuery);
           
           let dataContainer = {};
@@ -154,6 +161,7 @@ function cbArrivalsNow(){
               counter++;
           });
 
+          // SEND DATA TO CLIENT
           res.send(dataContainer);
 
         } finally {
@@ -164,12 +172,48 @@ function cbArrivalsNow(){
     }
 } //end cbArrivalsNow
 
+function cbDeparturesNow(){
+    return (req, res, next) => {
+  
+      const pool = new Pool(db_settings.AUTH_DB);
+      const id = req.params.id;
+  
+      (async ()=> {
+        // PREPARE DB DATA
+        const client = await pool.connect();
+        try {
+          const params = {
+            id: id
+          };
+  
+          // DEPARTURES DATA
+          let departuresNowQuery = queries.departuresNow(id);
+          let departuresNowRecords = await client.query(departuresNowQuery);
+          
+          let dataContainer = {};
+          let counter = 0;
+          
+          departuresNowRecords.rows.forEach(function(value){
+              dataContainer[counter] = value;
+              counter++;
+          });
 
+          // SEND DATA TO CLIENT
+          res.send(dataContainer);
+
+        } finally {
+          client.release();
+        }
+  
+      })().catch(e => console.log(e.stack));
+    }
+} //end cbDeparturesNow
 
 
 
 module.exports = {
     cbMooredNow: cbMooredNow,
     cbRoadsteadNow: cbRoadsteadNow,
-    cbArrivalsNow: cbArrivalsNow
+    cbArrivalsNow: cbArrivalsNow,
+    cbDeparturesNow: cbDeparturesNow
 }
