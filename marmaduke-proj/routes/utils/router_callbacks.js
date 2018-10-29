@@ -194,6 +194,16 @@ function cbTrafficListDataTable(tmpl_name, states){
 }
 
 
+
+function cbPrototypeRequest(){
+  return function(req, res){
+    let strToReturn = JSON.stringify("{ data: [['record A1', 'column A2'], ['record B1', 'column B2']]  }");
+    res.setHeader('Content-type', 'application/json');
+    res.setHeader('Access-Control-Allow-Origin', '*')
+    res.send(strToReturn);
+  }
+}
+
 function cbHomePage(){
   return function(req, res) {
     res.render('home', { title: 'Main page' });
@@ -207,5 +217,6 @@ module.exports = {
     cbArrivalPrevisionsArchive: cbArrivalPrevisionsArchive,
     cbShippedGoodsDataTable: cbShippedGoodsDataTable,
     cbTrafficListDataTable: cbTrafficListDataTable,
-    cbArchiveDataTable: cbArchiveDataTable
+    cbArchiveDataTable: cbArchiveDataTable,
+    cbPrototypeRequest: cbPrototypeRequest,
 }

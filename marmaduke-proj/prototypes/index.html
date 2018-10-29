@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=600, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Prototype</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="./main.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"/>
+    <script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+   <table id="prototypeTable" style="width:80%;" class="display zebra">
+        <thead>
+                <tr>
+                    <th>Trip ID</th>
+                    <th>Ship name</th>
+                    <th>Mooring time</th>
+                    <th>Stop quay</th>
+                </tr>
+            </thead>
+   </table> 
+</body>
+
+<script>
+$(document).ready(function(){
+
+    var mooredTable = $("#prototypeTable").DataTable();
+
+
+    setInterval(function(){
+        
+        $.ajax({
+        url: "http://80.88.88.162:3000/live_data/moored/28",
+        
+        success: function(data){
+            let dataToTable = data;
+            mooredTable.clear();
+
+            for (let elem in dataToTable){
+                mooredTable.row.add([
+                dataToTable[elem]["id_trip"], 
+                dataToTable[elem]["ship_name"],
+                dataToTable[elem]["mooring_time"],
+                dataToTable[elem]["stop_quay"] + " " + dataToTable[elem]["stop_berth"]
+                ]).draw(false);   
+                }
+
+            }
+        });
+
+    }, 2000);
+
+});
+
+
+
+</script>
+</html>

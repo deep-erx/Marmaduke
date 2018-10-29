@@ -18,6 +18,9 @@ router.get("/arrival_previsions/:id", liveCallbacks.cbArrivalsPrevNow());
 router.get("/shipped_goods/:id", callbacks.cbShippedGoodsDataTable("shipped_goods_now"));
 router.get("/traffic_list/:id", callbacks.cbTrafficListDataTable("traffic_list_now"));
 
+
+router.get("/prototype_request", callbacks.cbPrototypeRequest());
+
 /* STATIC DATA */
 router.get("/arrivals/:id", callbacks.cbStaticDataTable("arrivals_now", configuration.STATES_OF_ARRIVALS));
 router.get("/departures/:id", callbacks.cbStaticDataTable("departures_now", configuration.STATES_OF_DEPARTURES));

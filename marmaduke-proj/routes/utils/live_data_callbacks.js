@@ -67,6 +67,8 @@ function cbMooredNow(){
           } 
 
           // SEND DATA TO THE CLIENT
+          res.setHeader('Access-Control-Allow-Origin', '*');
+
           res.send(dataContainer);
 
         } finally {
